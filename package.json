@@ -1,0 +1,13 @@
+{
+  "name": "Image Data Uri",
+  "main": "./lib/image-data-uri",
+  "version": "0.0.0",
+  "description": "Display image near image data uri definitions.",
+  "keywords": [
+  ],
+  "repository": "https://github.com/cixzhang/image-data-uri",
+  "license": "MIT",
+  "engines": {
+    "atom": ">=1.0.0 <2.0.0"
+  }
+}
