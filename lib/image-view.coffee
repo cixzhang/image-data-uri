@@ -1,12 +1,16 @@
 
 module.exports =
   class ImageView
-    constructor: (@image) ->
+    constructor: (@editor, @marker) ->
       @el = document.createElement('div')
       @img = document.createElement('img')
-      @img.src = @image
+      @el.appendChild(@img)
+      @render()
+      return this
 
-      @el.appendChild(@img);
+    render: () ->
+      bufferRange = @marker.getBufferRange()
+      @img.src = @editor.getTextInBufferRange(bufferRange)
       return this
 
     getElement: () -> @el

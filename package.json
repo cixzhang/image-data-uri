@@ -1,5 +1,5 @@
 {
-  "name": "Image Data Uri",
+  "name": "image-data-uri",
   "main": "./lib/image-data-uri",
   "version": "0.0.0",
   "description": "Display image near image data uri definitions.",
