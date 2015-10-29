@@ -1,10 +1,10 @@
 {CompositeDisposable} = require 'atom'
-ImageView = require './image-view'
+Library = require './marker-decoration-library'
 
 module.exports = ImageDataUri =
   activate: (state) ->
     @active = true
-    @marks = []
+    @libraries = {}
     @disposables = new CompositeDisposable
     @disposables.add atom.workspace.observeTextEditors (e) => @subscribe e
 
@@ -23,19 +23,13 @@ module.exports = ImageDataUri =
     else @activate()
 
   subscribe: (editor) ->
+    @libraries[editor.id] = new Library(editor)
     @disposables.add editor.onDidStopChanging => @parse editor
 
   parse: (editor) ->
+    library = @libraries[editor.id]
     exp = /(data:image\/(?:png|gif|jpg|jpeg|svg);base64,[A-z0-9\/\+\s]*[=]*)/g
-    editor.scan(exp, (result) => @mark(editor, result))
+    editor.scan(exp, (result) => @mark(library, result))
 
-  mark: (editor, scanned) ->
-    range = scanned.range
-    marker = editor.markBufferRange(range)
-    overlay = new ImageView(editor, marker)
-    decoration = editor.decorateMarker(marker, {
-      type: 'overlay'
-      item: overlay.getElement()
-      class: 'image-data-uri'
-      position: 'tail'
-    })
+  mark: (library, scanned) ->
+    library.decorate(scanned.range)
