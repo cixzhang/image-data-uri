@@ -8,7 +8,7 @@ module.exports = ImageDataUri =
     @disposables = new CompositeDisposable
     @disposables.add atom.workspace.observeTextEditors (e) => @subscribe e
 
-    @disposables.add atom.commands.add(
+    atom.commands.add(
       'atom-text-editor', 'image-data-uri:toggle': => @toggle()
     )
 
@@ -16,6 +16,8 @@ module.exports = ImageDataUri =
     @active = false
     @disposables.dispose()
     @disposables.clear()
+    for editorId, library of @libraries
+      library.destroy()
 
   toggle: ->
     if @active

@@ -6,7 +6,6 @@ module.exports =
     constructor: (@editor) ->
       @decors = []
 
-
     decorate: (range) ->
       decor = false
       start = JSON.stringify(range.start)
@@ -38,7 +37,11 @@ module.exports =
       return decor
 
     destroy: (decor) ->
-      decor.disposable.dispose()
-      decor.marker.dispose()
-      index = @decors.indexOf(decor)
-      @decors.splice(index, 1)
+      if decor
+        decor.disposable.dispose()
+        decor.marker.destroy()
+        index = @decors.indexOf(decor)
+        @decors.splice(index, 1)
+      else
+        while @decors.length
+          @destroy(@decors[0])
