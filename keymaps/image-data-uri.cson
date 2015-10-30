@@ -1,2 +1,2 @@
 'atom-text-editor':
-  'cmd-alt-i': 'image-data-uri:toggle'
+  'cmd-alt-p': 'image-data-uri:toggle'
