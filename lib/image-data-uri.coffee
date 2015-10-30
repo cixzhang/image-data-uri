@@ -9,13 +9,13 @@ module.exports = ImageDataUri =
     @disposables.add atom.workspace.observeTextEditors (e) => @subscribe e
 
     @disposables.add atom.commands.add(
-      'atom-workspace', 'image-data-uri:toggle': => @toggle()
+      'atom-text-editor', 'image-data-uri:toggle': => @toggle()
     )
 
   deactivate: ->
     @active = false
     @disposables.dispose()
-    @disposables.destroy()
+    @disposables.clear()
 
   toggle: ->
     if @active
