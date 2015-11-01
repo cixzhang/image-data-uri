@@ -3,8 +3,6 @@ Library = require './marker-decoration-library'
 
 module.exports = ImageDataUri =
   activate: (state) ->
-    @libraries = {}
-    @disposables = new CompositeDisposable
     @reactivate()
     atom.commands.add(
       'atom-text-editor', 'image-data-uri:toggle': => @toggle()
@@ -12,12 +10,13 @@ module.exports = ImageDataUri =
 
   reactivate: ->
     @active = true
+    @libraries = {}
+    @disposables = new CompositeDisposable
     @disposables.add atom.workspace.observeTextEditors (e) => @subscribe e
 
   deactivate: ->
     @active = false
     @disposables.dispose()
-    @disposables.clear()
     for editorId, library of @libraries
       library.destroy()
 
